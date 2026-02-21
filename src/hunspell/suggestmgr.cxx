@@ -2261,6 +2261,11 @@ char* SuggestMgr::lcs(const char* s,
     m = strlen(s);
     n = strlen(s2);
   }
+  if (m <= 0 || n <= 0) {
+    *l1 = 0;
+    *l2 = 0;
+    return NULL;
+  }
   char* c = new char[(m + 1) * (n + 1)];
   char* b = new char[(m + 1) * (n + 1)];
   for (i = 1; i <= m; i++)
@@ -2291,6 +2296,8 @@ char* SuggestMgr::lcs(const char* s,
 int SuggestMgr::lcslen(const char* s, const char* s2) {
   int m, n, len = 0;
   char* result = lcs(s, s2, &m, &n);
+  if (!result)
+    return 0;
   int i = m, j = n;
   while ((i != 0) && (j != 0)) {
     if (result[i * (n + 1) + j] == LCS_UPLEFT) {
