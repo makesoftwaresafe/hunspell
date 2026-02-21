@@ -138,7 +138,8 @@ hu.dic \
 warn.dic \
 timelimit.dic \
 ignoresug.dic \
-limit-multiple-compounding.dic
+limit-multiple-compounding.dic \
+iconv_break_overflow.dic
 
 clean-local:
 	-rm -rf testSubDir
@@ -662,5 +663,8 @@ limit-multiple-compounding.aff \
 limit-multiple-compounding.dic \
 limit-multiple-compounding.good \
 limit-multiple-compounding.wrong \
+iconv_break_overflow.aff \
+iconv_break_overflow.dic \
+iconv_break_overflow.wrong \
 \
 utf8_nonbmp.test

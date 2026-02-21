@@ -443,6 +443,10 @@ bool HunspellImpl::spell(const std::string& word, std::vector<std::string>& cand
   if (std::find(candidate_stack.begin(), candidate_stack.end(), word) != candidate_stack.end())
     return false;
 
+  // ofz#42529814 prevent deeply nested wordbreak recursion
+  if (candidate_stack.size() >= MAXBREAKDEPTH)
+    return false;
+
   candidate_stack.push_back(word);
   bool r = spell_internal(word, candidate_stack, info, root);
   candidate_stack.pop_back();
@@ -701,7 +705,7 @@ bool HunspellImpl::spell_internal(const std::string& word, std::vector<std::stri
         pos += j.size();
       }
     }
-    if (nbr >= 10)
+    if (nbr >= MAXBREAKDEPTH)
       return false;
 
     // check boundary patterns (^begin and end$)

@@ -83,6 +83,7 @@
 #endif
 
 #define MAXSHARPS 5
+#define MAXBREAKDEPTH 10
 
 #ifndef MAXWORDLEN
 #define MAXWORDLEN 100
