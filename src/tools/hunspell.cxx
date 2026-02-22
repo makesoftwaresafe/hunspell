@@ -815,6 +815,8 @@ nextline:
 
     if (pos >= 0) {
       parser->put_line(buf + pos);
+      int prev_byte_offset = 0;
+      int prev_char_offset = 0;
       std::string token;
       while (parser->next_token(token)) {
         token = parser->get_word(token);
@@ -946,15 +948,17 @@ nextline:
               fflush(stdout);
             } else {
               int byte_offset = parser->get_tokenpos() + pos;
-              int char_offset = 0;
+              int char_offset = prev_char_offset;
               if (io_is_utf8) {
-                for (int i = 0; i < byte_offset; i++) {
+                for (int i = prev_byte_offset; i < byte_offset; i++) {
                   if ((buf[i] & 0xc0) != 0x80)
                     char_offset++;
                 }
               } else {
                 char_offset = byte_offset;
               }
+              prev_byte_offset = byte_offset;
+              prev_char_offset = char_offset;
               std::vector<std::string> wlst =
                 pMS[d]->suggest(chenc(token, io_enc, dic_enc[d]));
               for (size_t j = 0; j < wlst.size(); ++j) {
@@ -988,15 +992,17 @@ nextline:
               fflush(stdout);
             } else {
               int byte_offset = parser->get_tokenpos() + pos;
-              int char_offset = 0;
+              int char_offset = prev_char_offset;
               if (io_is_utf8) {
-                for (int i = 0; i < byte_offset; i++) {
+                for (int i = prev_byte_offset; i < byte_offset; i++) {
                   if ((buf[i] & 0xc0) != 0x80)
                     char_offset++;
                 }
               } else {
                 char_offset = byte_offset;
               }
+              prev_byte_offset = byte_offset;
+              prev_char_offset = char_offset;
               std::vector<std::string> wlst =
                 pMS[d]->suggest(chenc(token, io_enc, dic_enc[d]));
               for (size_t j = 0; j < wlst.size(); ++j) {
