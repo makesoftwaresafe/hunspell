@@ -1079,6 +1079,7 @@ static int rl_escape(int count, int key) {
 #ifdef HAVE_CURSES_H
 int expand_tab(std::string& dest, const std::string& in_src) {
   dest.clear();
+  dest.reserve(in_src.size());
   const char *src = in_src.c_str();
   int u8 = ((ui_enc != NULL) && (strcmp(ui_enc, "UTF-8") == 0)) ? 1 : 0;
   int chpos = 0;
